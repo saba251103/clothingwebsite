@@ -8,7 +8,6 @@ import IconButton from '@mui/material/IconButton';
 import { Instagram } from '@mui/icons-material';
 import { X } from '@mui/icons-material';
 import { Facebook } from '@mui/icons-material';
-import { Twitter } from '@mui/icons-material';
 import { Search } from '@mui/icons-material';
 import logo from './logo.png';
 import front from './front.png';
@@ -38,10 +37,7 @@ export default function Home() {
       const openX = () =>{
         window.open('https://www.x.com', '_blank');
       };
-    
-      const openTwitter = () => {
-        window.open('https://www.twitter.com', '_blank');
-        };
+
     
         const testimonials = [
             {
@@ -101,17 +97,6 @@ export default function Home() {
             onClick={openX}
           >
         <X/>
-          </IconButton>
-
-          <IconButton
-            size="large"
-            edge="start"
-            color="#c9c7b8"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={openTwitter}
-          >
-        <Twitter/>
           </IconButton>
 
           <IconButton
