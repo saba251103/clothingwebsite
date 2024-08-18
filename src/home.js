@@ -52,6 +52,22 @@ export default function Home() {
               name: 'Emily Johnson',
               content: 'I love the variety and quality of the collections!',
             },
+            {
+              name:'Hermoine Granger',
+              content: "This website has undeniably transformed Harry and Ron's style",
+            },
+            {
+              name: 'Ron Weasly',
+              content: 'I never knew I could look this good!',
+            },
+            {
+              name:'Luna Lovegood',
+              content: 'I love the way the clothes make me feel like a unicorn',
+            },
+            {
+              name:'Neville LongBottom',
+              content: 'I never knew I could be this stylish',
+            },
           ];
   return (
     <div className='home'>
