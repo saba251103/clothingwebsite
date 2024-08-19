@@ -37,8 +37,38 @@ export default function Home() {
       const openX = () =>{
         window.open('https://www.x.com', '_blank');
       };
+      const navigateToNextPage = (id) => {
+        const selectedContent = Imagecontent[id - 1]; // Adjust index by subtracting 1
+        if (selectedContent) {
+          localStorage.setItem('imageId', id);
+          localStorage.setItem('Heading', selectedContent.heading);
+          localStorage.setItem('content', selectedContent.content);
+          navigate('/nextpage');
+        } else {
+          console.error("Invalid ID provided");
+        }
+      };
+      
+      const Imagecontent = [
+        {
+          heading: 'Sunny Side Up Style',
+          content: 'Embrace the warmth of autumn with our electric orange jacket paired with a crisp white tee. This dynamic duo effortlessly blends comfort and cool, perfect for a casual day or a night out.',
+        },
+        {
+          heading: 'Embrace the minimalist aesthetic',
+          content: 'This beige shirt embodies the clean lines and understated elegance of Japanese fashion. Perfect when paired with classic black trousers for a sophisticated, modern outfit.',
+        },
+        {
+          heading: 'Indulge in luxury',
+          content: "This black dress features exquisite ruffles that add a touch of drama and sophistication to your look. Perfect for a night out or a special occasion.",
+        },
+        {
+          heading: 'Soft and sophisticated',
+          content: "This ensemble of a delicate pink turtleneck, matching jacket, and breezy light blue pants creates a harmonious yet unexpected look. Perfect for a day of exploring.",
+        },
+      ];
+      
 
-    
         const testimonials = [
             {
               name: 'John Doe',
@@ -145,7 +175,7 @@ export default function Home() {
     <Box id="home" sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#c9c7b8', padding: '2%' }}>
           <img
             src={front}
-            alt="A girl wearing new collection clothing in a ruffle purple dress with a sunflower"
+            alt="A girl"
             style={{ maxWidth: '55%', marginRight: '5%' }}
           />
            <Box sx={{ textAlign: 'left', justifyContent: 'center', justifyItems: 'left', maxWidth: '50%' }}>
@@ -201,10 +231,11 @@ export default function Home() {
       }}
     >
         <br/>
-      <img
-        id={`${index + 1}`}
+        <img
+        id={`${index}`}
         src={image}
         alt={`Shop New Item ${index + 1}`}
+        onClick={() => navigateToNextPage(index + 1)} // Change to `index + 1` to match the ID logic
         style={{
           width: '100%',
           height: '100%', 
@@ -252,7 +283,7 @@ export default function Home() {
             <Typography variant="body2">
             That Trifecta Muse is more than just a clothing store; it's a lifestyle. We're passionate about crafting apparel that empowers individuals to express their unique style. Our collections are designed to inspire confidence and make you feel extraordinary.
 
-We believe that fashion should be accessible, sustainable, and a source of joy. That's why we're committed to creating high-quality pieces that not only look great but also feel amazing to wear.
+            We believe that fashion should be accessible, sustainable, and a source of joy. That's why we're committed to creating high-quality pieces that not only look great but also feel amazing to wear.
 
 Join us on this fashion journey as we redefine trends and celebrate individuality.
             </Typography>
