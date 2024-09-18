@@ -7,12 +7,16 @@ import { styled } from "@mui/system";
 import { Box, Typography, Button } from "@mui/material";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import Favorite from "@mui/icons-material/Favorite";
-
+import { useNavigate } from "react-router-dom";
 export default function Nextpage() {
   const [currentImage, setCurrentImage] = useState(image1);
   const [heading, setHeading] = useState('');
   const [content, setContent] = useState('');
-
+  const navigate=useNavigate()
+  const Buy = () =>{
+    alert('You have successfully purchased the product');
+    navigate('/home');
+  }
   const ProductDetails = styled(Box)({
     textAlign: 'left',
     padding: '20px',
@@ -88,8 +92,9 @@ export default function Nextpage() {
               variant="contained" 
               startIcon={<ShoppingCart />} 
               sx={{ marginTop: '10px', marginRight: '10px', backgroundColor:"#8c8674" }}
+              onClick={Buy}
             >
-              Add to Bag
+              Buy
             </Button>
             <Button 
               variant="contained" 
