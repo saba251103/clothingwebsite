@@ -26,6 +26,9 @@ export default function Home() {
     const signin = () =>{
         navigate('/home');
     }
+    const goTonext = () =>{
+      navigate('/newpage');
+    }
     const openInstagram = () => {
         window.open('https://www.instagram.com', '_blank');
       };
@@ -257,10 +260,10 @@ export default function Home() {
     color:'black',
     }}
     >
-         <Typography variant="body2" sx={{ textAlign: 'center', fontFamily: 'Anahaw' }}>
+         <Button variant="body2" sx={{ textAlign: 'center', fontFamily: 'Anahaw' }} onClick={goTonext}>
            
    Check out more such collections..
-   </Typography>
+   </Button>
 </Button>
 </Box>
 
