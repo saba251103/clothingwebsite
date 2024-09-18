@@ -12,7 +12,6 @@ export default function Nextpage() {
   const [currentImage, setCurrentImage] = useState(image1);
   const [heading, setHeading] = useState('');
   const [content, setContent] = useState('');
-  const images = [image1, image2, image3, image4];
 
   const ProductDetails = styled(Box)({
     textAlign: 'left',
@@ -27,11 +26,12 @@ export default function Nextpage() {
   });
 
   useEffect(() => {
+    const images = [image1, image2, image3, image4]; // Moved inside useEffect
     const imageId = parseInt(localStorage.getItem('imageId'), 10); // Ensure imageId is a number
     const storedHeading = localStorage.getItem('Heading');
     const storedContent = localStorage.getItem('content');
   
-    console.log(`imageId: ${imageId}`); // Debugging line to check imageId (corrected)
+    console.log(`imageId: ${imageId}`); // Debugging line to check imageId
     console.log(`storedHeading: ${storedHeading}`); // Debugging line to check Heading
     console.log(`storedContent: ${storedContent}`); // Debugging line to check Content
   
@@ -42,8 +42,7 @@ export default function Nextpage() {
     } else {
       console.error("Image ID is out of bounds or invalid");
     }
-  }, [images]);
-  
+  }, []); // No need to add `images` as a dependency
 
   return (
     <div className="signin-container">
@@ -57,7 +56,7 @@ export default function Nextpage() {
         >
           <img
             src={currentImage}
-            alt="Images"
+            alt="Product"
             style={{
               width: '100%',
               height: '100%', 
