@@ -57,7 +57,7 @@ export default function Nextpage() {
         >
           <img
             src={currentImage}
-            alt=""
+            alt="Images"
             style={{
               width: '100%',
               height: '100%', 

@@ -270,6 +270,7 @@ export default function Home() {
           <img
             src={about}
             style={{ maxWidth: '50%' }}
+            alt='image'
           />
            <Box sx={{ textAlign: 'justify', justifyContent: 'center', justifyItems: 'left', maxWidth: '60%', marginLeft: '5%', marginRight: '3%' }}>
             <Typography className='new-arrival' variant="h3" sx={{ marginBottom: '1%', textAlign: 'center', fontFamily: 'Atteron' }}>
