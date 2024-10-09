@@ -40,6 +40,7 @@ export default function Home() {
       const openX = () =>{
         window.open('https://www.x.com', '_blank');
       };
+
       const navigateToNextPage = (id) => {
         const selectedContent = Imagecontent[id - 1]; // Adjust index by subtracting 1
         if (selectedContent) {

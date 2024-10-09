@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, Paper, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
@@ -7,18 +7,55 @@ import HomeIcon from '@mui/icons-material/Home';
 import WcIcon from '@mui/icons-material/Wc';
 import './SignupPage.css';
 import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from './firebase';  // Import Firebase authentication and Realtime Database
+import { ref, set } from 'firebase/database';  // Import Realtime Database methods
+
 function SignupPage() {
-    const navigate=useNavigate()
-    const goTohome = ()=>{
-        navigate('/home');
-    };
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [gender, setGender] = useState('');
+  const [address, setAddress] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    try {
+      // Step 1: Create user with email and password in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Step 2: Store additional user information in Realtime Database
+      const userRef = ref(db, `users/${user.uid}`);
+      await set(userRef, {
+        fullName,
+        email,
+        mobile,
+        gender,
+        address,
+        createdAt: new Date().toISOString(),
+      });
+
+      // Step 3: Navigate to the home page after successful signup
+      navigate('/home');
+
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
-    <div >
+    <div>
       <Paper className="signup-form">
         <Typography variant="h4" color="#797c69" gutterBottom>
           Create an Account
         </Typography>
-        <form>
+        <form onSubmit={handleSignUp}>
           <TextField
             fullWidth
             label="Full Name"
@@ -27,6 +64,8 @@ function SignupPage() {
             InputProps={{
               startAdornment: <PersonOutlineIcon color="action" />,
             }}
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
             required
           />
           <TextField
@@ -37,6 +76,8 @@ function SignupPage() {
             InputProps={{
               startAdornment: <PersonOutlineIcon color="action" />,
             }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <TextField
@@ -47,6 +88,8 @@ function SignupPage() {
             InputProps={{
               startAdornment: <PhoneIcon color="action" />,
             }}
+            value={mobile}
+            onChange={(e) => setMobile(e.target.value)}
             required
           />
           <FormControl fullWidth variant="outlined" margin="normal">
@@ -54,6 +97,8 @@ function SignupPage() {
             <Select
               label="Gender"
               startAdornment={<WcIcon color="action" />}
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
               required
             >
               <MenuItem value="male">Male</MenuItem>
@@ -69,6 +114,8 @@ function SignupPage() {
             InputProps={{
               startAdornment: <HomeIcon color="action" />,
             }}
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             multiline
             rows={3}
             required
@@ -82,15 +129,21 @@ function SignupPage() {
             InputProps={{
               startAdornment: <LockOpenIcon color="action" />,
             }}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
+          {error && (
+            <Typography color="error" gutterBottom>
+              {error}
+            </Typography>
+          )}
           <Button
             fullWidth
             variant="contained"
             color="primary"
             style={{ backgroundColor: '#797c69', marginTop: '20px' }}
             type="submit"
-            onClick={goTohome}
           >
             Sign Up
           </Button>
