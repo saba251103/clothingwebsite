@@ -1,0 +1,116 @@
+.App {
+  text-align: center;
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  background-color: #dfe3d8;
+  background-size: cover;
+  background-position: center;
+}
+
+.home{
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0);
+  margin: 20px;
+}
+
+.latest{
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0);
+  margin: 20px;
+}
+@font-face {
+  font-family: 'Atteron';
+  src: url('./fonts/Atteron.ttf') format('truetype');
+}
+
+.new-arrivals {
+  font-family: 'Atteron', sans-serif;
+}
+/* Container for the testimonial section */
+.testimonial-section {
+  padding: 5%;
+  background-color: #f4f4f4;
+}
+
+/* Title of the testimonial section */
+.section-title {
+  margin-bottom: 2%;
+  text-align: center;
+  font-family: 'Atteron', sans-serif;
+  color: #797c69;
+}
+
+/* Flex container for testimonial cards */
+.testimonial-cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2%;
+}
+
+/* Individual testimonial card */
+.testimonial-card {
+  max-width: 345px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Hover effect for testimonial card */
+.testimonial-card:hover {
+  transform: scale(1.05);
+  box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Profile image at the top of the card */
+.profile-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.card-content {
+  text-align: center;
+  padding: 16px;
+}
+
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  margin-bottom: 10px;
+  border: 2px solid white;
+}
+
+
+.card-name {
+  margin-bottom: 10px;
+  color: white;
+}
+
+
+.card-content-text {
+  color: white;
+}
+
+
+.arrow-button {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background-color: white;
+  color: inherit;
+}
