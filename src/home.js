@@ -18,6 +18,7 @@ import image2 from './image2.png';
 import image3 from './image3.png';
 import image4 from './image4.png';
 import {Avatar,Paper} from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
 
 import './App.css';
 
@@ -114,15 +115,15 @@ export default function Home() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{backgroundColor:'white'}}>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="#c9c7b8"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-        <Search/>
-          </IconButton>
+        <IconButton
+        size="large"
+        edge="start"
+        aria-label="home"
+        sx={{ mr: 2, color: '#5A5A5A' }}
+        onClick={signin}
+      >
+        <HomeIcon />
+        </IconButton>
           <Typography
               variant="h5"
               noWrap
@@ -206,7 +207,7 @@ export default function Home() {
               variant="outlined"
               id='1'
               sx={{ color: 'black', borderColor: 'black', display: 'block', mx: 'auto' }}
-              onClick={signin}
+              onClick={goTonext}
             >
               Shop Now
             </Button>

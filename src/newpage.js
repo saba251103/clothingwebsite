@@ -1,4 +1,13 @@
 import React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import { Instagram } from '@mui/icons-material';
+import { X } from '@mui/icons-material';
+import { Facebook } from '@mui/icons-material';
+import logo from './logo.png';
+import { useNavigate } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
 import { Box, Typography, Grid, Card, CardMedia, CardContent } from '@mui/material';
 import { Link } from 'react-router-dom'; // Import Link for navigation
 import './App.css';
@@ -15,7 +24,9 @@ import img10 from './img11.png';
 import img11 from './img12.png';
 import img12 from './img13.png';
 
+
 function Newpage() {
+
   // Product data with imported images
   const newArrivals = [
     { title: 'Oversized Tshirts', image: img1, link: 'oversized-tshirts' },
@@ -38,7 +49,103 @@ function Newpage() {
     { title: 'Black Coats', image: img12, link: 'best-black-coats' },
   ];
 
+  const openInstagram = () => {
+    window.open('https://www.instagram.com', '_blank');
+  };
+
+  const openFacebook = () => {
+    window.open('https://www.facebook.com', '_blank');
+  };
+
+  const openX = () =>{
+    window.open('https://www.x.com', '_blank');
+  };
+
+  const clickcolortest = () => {
+    console.log('clicked');
+    navigate('/colortest');
+  };
+
+  const goToHomepage = () => {
+    navigate('/home'); // Redirects to the homepage (root path)
+  };
+
+  const navigate = useNavigate();
+
   return (
+    <div className='newpage'>
+
+<Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" sx={{backgroundColor:'white'}}>
+        <Toolbar>
+        <IconButton
+        size="large"
+        edge="start"
+        aria-label="home"
+        sx={{ mr: 2, color: '#5A5A5A' }}
+        onClick={goToHomepage}
+      >
+        <HomeIcon />
+        </IconButton>
+          <Typography
+              variant="h5"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}
+            >
+              <img src={logo} alt="displaying logo That Trifecta Muse" width={200} />
+            </Typography>
+
+            <IconButton
+            size="large"
+            edge="start"
+            color="#c9c7b8"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={openInstagram}
+          >
+        <Instagram/>
+          </IconButton>
+          
+          <IconButton
+            size="large"
+            edge="start"
+            color="#c9c7b8"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={openX}
+          >
+        <X/>
+          </IconButton>
+
+          <IconButton
+            size="large"
+            edge="start"
+            color="#c9c7b8"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={openFacebook}
+          >
+        <Facebook/>
+
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+    </Box>
+    
+    {/* <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" sx={{ marginTop: 2 ,backgroundColor:"#797c69",color:'black'}}>
+          <Box sx={{height:'100px',justifyContent:"center",alignContent:'center'}}>
+            <Button href="/home/#home" title="Home" sx={{color:'black'}}>Home</Button>
+            <Button href="/newpage" title="Latest" sx={{color:'black'}}>New Collection</Button>
+            <Button href="/home/#about" title="About Us" sx={{color:'black'}}>About Us</Button>
+            <Button href="/home/#testimonials" title="Testimonial" sx={{color:'black'}}>Testimonial</Button>
+            <Button href="/home/#contact" title="Contact Us" sx={{color:'black'}}>Contact Us</Button>
+            <Button title="Color Test" sx={{color:'black'}} onClick={clickcolortest}>Color Test</Button>
+            </Box>
+        </AppBar>
+    </Box> */}
+    <br/>
     <Box className="homepage">
       {/* New Arrivals Section */}
       <SectionWithGrid title="New Arrivals" products={newArrivals} bgColor="#f0f0f0" />
@@ -49,6 +156,7 @@ function Newpage() {
       {/* Best Sellers Section */}
       <SectionWithGrid title="Best Sellers" products={bestSellers} bgColor="#c9c7b8" />
     </Box>
+    </div>
   );
 }
 
@@ -74,7 +182,13 @@ const SectionWithGrid = ({ title, products, bgColor }) => {
 const ProductCard = ({ title, image, link }) => {
   return (
     <Card sx={{ maxWidth: 705, margin: '1rem auto' }}>
-      <Link to={`/newpage/${link}`} style={{ textDecoration: 'none' }}>
+      <Link
+        to={`/newpage/${link}`}
+        style={{
+          textDecoration: 'none',
+          color: 'black', // Set the text color to black
+        }}
+      >
         <CardMedia component="img" height="300" image={image} alt={title} />
         <CardContent>
           <Typography variant="h6" component="div">

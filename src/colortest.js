@@ -5,6 +5,15 @@ import "./style.css"; // Assuming you have custom styles
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import { Instagram } from '@mui/icons-material';
+import { X } from '@mui/icons-material';
+import { Facebook } from '@mui/icons-material';
+import logo from './logo.png';
+import { useNavigate } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
 import colortest1 from './colortest.png';
 import autumn from './autumn.png';
 import spring from './spring.png';
@@ -179,7 +188,28 @@ console.log(image)
     setAnalysisResult(result);
   };
 
+  const openInstagram = () => {
+    window.open('https://www.instagram.com', '_blank');
+  };
 
+  const openFacebook = () => {
+    window.open('https://www.facebook.com', '_blank');
+  };
+
+  const openX = () =>{
+    window.open('https://www.x.com', '_blank');
+  };
+
+  const clickcolortest = () => {
+    console.log('clicked');
+    navigate('/colortest');
+  };
+
+  const goToHomepage = () => {
+    navigate('/home'); // Redirects to the homepage (root path)
+  };
+
+  const navigate = useNavigate();
   
   const getJewelry = (skinTone) => {
     return skinTone == 'Warm' ? 'Gold' : 'Silver';
@@ -274,6 +304,68 @@ console.log(image)
  };
 
   return (
+
+    <div className="colortest">
+
+<Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" sx={{backgroundColor:'white'}}>
+        <Toolbar>
+        <IconButton
+        size="large"
+        edge="start"
+        aria-label="home"
+        sx={{ mr: 2, color: '#5A5A5A' }}
+        onClick={goToHomepage}
+      >
+        <HomeIcon />
+        </IconButton>
+          <Typography
+              variant="h5"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}
+            >
+              <img src={logo} alt="displaying logo That Trifecta Muse" width={200} />
+            </Typography>
+
+            <IconButton
+            size="large"
+            edge="start"
+            color="#c9c7b8"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={openInstagram}
+          >
+        <Instagram/>
+          </IconButton>
+          
+          <IconButton
+            size="large"
+            edge="start"
+            color="#c9c7b8"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={openX}
+          >
+        <X/>
+          </IconButton>
+
+          <IconButton
+            size="large"
+            edge="start"
+            color="#c9c7b8"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={openFacebook}
+          >
+        <Facebook/>
+
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+    </Box>
+    
+
     <Box sx={{ flexGrow: 1, backgroundColor: '#f5f5f5', padding: '4%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Box sx={{ width: '100%', maxWidth: '800px', textAlign: 'center', mb: '16px' }}>
         <Box id="home" sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'Menu', padding: '2%' }}>
@@ -545,7 +637,7 @@ console.log(image)
       </Box>
     </Box> 
 </Box>
-    
+    </div>
   );
 }
 
