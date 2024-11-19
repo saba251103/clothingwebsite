@@ -9,6 +9,7 @@ import ProductDetailPage from './ProductDetailPage';
 import Colortest from './colortest'; // Import the Colortest component
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute'; // Import the ProtectedRoute component
+import CartPage from './CartPage';
 
 function App() {
   return (
@@ -72,6 +73,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+          
+        <Route 
+        path="/cart" 
+        element={
+          <ProtectedRoute>
+        <CartPage />
+        </ProtectedRoute>} />
+
         </Routes>
       </Router>
     </div>
