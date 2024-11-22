@@ -11,6 +11,7 @@ import {
   Button,
   TextField,
 } from '@mui/material';
+
 import img1 from './images/img_1.png';
 import img2 from './images/img_2.png';
 import img3 from './images/img_3.png';
@@ -119,6 +120,18 @@ const ProductDetailPage = () => {
       { id: 8, name: 'Trendy Satchel', price: 7299, image: img26 },
       { id: 9, name: 'Minimalist Bag', price: 6999, image: img27 },
     ],
+   'formal-jacket': [
+    { id: 1, name: 'Vintage Casual Shirt', price: 879, image: img10 },
+    { id: 2, name: 'Slim Fit Casual Shirt', price: 1050, image: img11 },
+    { id: 3, name: 'Crisp White Shirt', price: 980, image: img12 },
+    { id: 4, name: 'Bold Pattern Shirt', price: 1020, image: img13 },
+    { id: 5, name: 'Subtle Striped Shirt', price: 950, image: img14 },
+    { id: 6, name: 'Muted Tone Shirt', price: 925, image: img15 },
+    { id: 7, name: 'Linen Blend Shirt', price: 970, image: img16 },
+    { id: 8, name: 'Soft Cotton Shirt', price: 945, image: img17 },
+    { id: 9, name: 'Relaxed Collar Shirt', price: 900, image: img18 },
+    ],
+
     // Add more categories and products here
   };
   const products = categoryData[productSlug] || [];
