@@ -1,79 +1,324 @@
-import React from 'react';
-import { useCart } from './CartContext';
-import { Box, Typography, Grid, Card, CardMedia, CardContent, CardActions, Button, Divider } from '@mui/material';
+import React, { useEffect, useState } from "react";
+import { ref, onValue, update, remove } from "firebase/database";
+import { db } from "./firebase";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import { X, Facebook, Instagram } from '@mui/icons-material';
+import HomeIcon from '@mui/icons-material/Home';
+import { useNavigate } from 'react-router-dom';
+import logo from './logo.png';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import {
+  Box,
+  Typography,
+  Grid,
+  Paper,
+  Button,
+  Divider,
+  Avatar,
+  Stack,
+  IconButton,
+} from "@mui/material";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 const CartPage = () => {
-  const { cart, removeFromCart } = useCart();
+  const [cartItems, setCartItems] = useState([]);
+  const [totalBill, setTotalBill] = useState(0);
 
-  // Calculate total price
-  const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
+  // Fetch cart data from Firebase
+  useEffect(() => {
+    const cartRef = ref(db, "cart");
+    const unsubscribe = onValue(cartRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const items = Object.entries(data).map(([id, item]) => ({
+          id,
+          ...item,
+        }));
+        setCartItems(items);
+
+        // Calculate total bill
+        const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        setTotalBill(total);
+      } else {
+        setCartItems([]);
+        setTotalBill(0);
+      }
+    });
+
+
+    return () => unsubscribe();
+  }, []);
+
+  // Update item quantity
+  const handleQuantityChange = (id, newQuantity) => {
+    const cartRef = ref(db, 'cart'); // Reference to the cart section in the database
+
+    // Fetch all cart items
+    onValue(cartRef, (snapshot) => {
+      const cartItems = snapshot.val(); // Retrieve all cart items
+      if (cartItems) {
+        // Iterate through the items to find the matching ID
+        for (const key in cartItems) {
+          if (cartItems[key].id === id) {
+            // Update the quantity for the matching item
+            const itemRef = ref(db, `cart/${key}`); // Reference to the specific cart item
+            update(itemRef, { quantity: newQuantity })
+              .then(() => {})
+              .catch((error) => {
+                console.error('Error updating quantity: ', error);
+                window.alert('Failed to update quantity.');
+              });
+            break; // Exit the loop once the item is found
+          }
+        }
+      } else {
+        console.log('Cart is empty or item not found.');
+        window.alert('Cart is empty or item not found.');
+      }
+    }, { onlyOnce: true }); // Ensure it listens only once
+  };
+
+  // Remove item from cart
+  const handleRemoveItem = (id) => {
+    const itemRef = ref(db, `cart/${id}`);
+    remove(itemRef)
+      .then(() => {
+        window.alert("Item removed from cart.");
+      })
+      .catch((error) => {
+        console.error("Error removing item: ", error);
+        window.alert("Failed to remove item.");
+      });
+  };
+
+  const openInstagram = () => {
+    window.open('https://www.instagram.com', '_blank');
+  };
+
+  const openFacebook = () => {
+    window.open('https://www.facebook.com', '_blank');
+  };
+
+  const openX = () =>{
+    window.open('https://www.x.com', '_blank');
+  };
+
+  const clickcolortest = () => {
+    console.log('clicked');
+    navigate('/colortest');
+  };
+
+  const goToHomepage = () => {
+    navigate('/home'); // Redirects to the homepage (root path)
+  };
+
+  const goToCart = () => {
+    navigate('/cart'); // Replace with your cart page path
+  };
+
+  const navigate = useNavigate();
 
   return (
-    <Box sx={{ padding: '2rem' }}>
-      <Typography variant="h3" fontWeight="bold" gutterBottom textAlign="center">
-        Your Cart
+    <div className='home'>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" sx={{backgroundColor:'white'}}>
+        <Toolbar>
+        <IconButton
+        size="large"
+        edge="start"
+        aria-label="home"
+        color= '#c9c7b8'
+        sx={{ mr: 2 }}
+        onClick={goToHomepage}
+      >
+        <HomeIcon />
+        </IconButton>
+
+        <IconButton
+          size="large"
+          edge="start"
+          color="#c9c7b8" 
+          aria-label="cart"
+          sx={{ mr: 2 }}
+          onClick={goToCart}>
+        <ShoppingCartIcon />
+        </IconButton>
+          <Typography
+              variant="h5"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}
+            >
+              <img src={logo} alt="displaying logo That Trifecta Muse" width={200} />
+            </Typography>
+
+            <IconButton
+            size="large"
+            edge="start"
+            color="#c9c7b8"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={openInstagram}
+          >
+        <Instagram/>
+          </IconButton>
+          
+          <IconButton
+            size="large"
+            edge="start"
+            color="#c9c7b8"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={openX}
+          >
+        <X/>
+          </IconButton>
+
+          <IconButton
+            size="large"
+            edge="start"
+            color="#c9c7b8"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={openFacebook}
+          >
+        <Facebook/>
+
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+    </Box>
+    <br/>
+    <Box sx={{ padding: "2rem", minHeight: "100vh", backgroundColor: "#f0f0f0" }}>
+      <Typography
+        variant="h3"
+        fontWeight="bold"
+        gutterBottom
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
+        <ShoppingCartOutlinedIcon fontSize="large" sx={{ marginRight: "0.5rem" }} />
+        My Cart
       </Typography>
 
-      {/* Cart Items */}
-      {cart.length > 0 ? (
-        <Grid container spacing={4}>
-          {cart.map((item) => (
-            <Grid item xs={12} sm={6} md={4} key={item.id}>
-              <Card>
-                <CardMedia component="img" height="300" image={item.image} alt={item.name} />
-                <CardContent>
-                  <Typography variant="h6">{item.name}</Typography>
-                  <Typography variant="body1" color="textSecondary">
-                    Price: ₹{item.price}
-                  </Typography>
-                </CardContent>
-                <CardActions>
+      <Grid container spacing={3} sx={{ marginTop: "1rem" }}>
+        {/* Cart Items Section */}
+        <Grid item xs={12} md={8}>
+          {cartItems.length > 0 ? (
+            <Stack spacing={2}>
+              {cartItems.map((item) => (
+                <Paper
+                  key={item.id}
+                  elevation={3}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "1rem",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <Avatar
+                    src={item.image}
+                    alt={item.name}
+                    sx={{ width: 100, height: 100, marginRight: "1rem" }}
+                    variant="rounded"
+                  />
+                  <Box flex="1">
+                    <Typography variant="h6" fontWeight="bold">
+                      {item.name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      Price: ₹{item.price} x {item.quantity}
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: "0.5rem",
+                      }}
+                    >
+                      <IconButton
+                        color="primary"
+                        onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                      >
+                        <RemoveIcon />
+                      </IconButton>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          margin: "0 1rem",
+                          minWidth: "30px",
+                          textAlign: "center",
+                        }}
+                      >
+                        {item.quantity}
+                      </Typography>
+                      <IconButton
+                        color="primary"
+                        onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                      >
+                        <AddIcon />
+                      </IconButton>
+                    </Box>
+                  </Box>
                   <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => removeFromCart(item.id)}
+                    variant="outlined"
+                    color="error"
+                    onClick={() => handleRemoveItem(item.id)}
                   >
                     Remove
                   </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
+                </Paper>
+              ))}
+            </Stack>
+          ) : (
+            <Typography variant="h6" color="textSecondary" textAlign="center">
+              Your cart is empty.
+            </Typography>
+          )}
         </Grid>
-      ) : (
-        <Typography variant="h5" color="textSecondary" textAlign="center">
-          Your cart is empty.
-        </Typography>
-      )}
 
-      {/* Bill Summary */}
-      {cart.length > 0 && (
-        <Box sx={{ marginTop: '2rem', padding: '1rem', border: '1px solid #ccc', borderRadius: '8px' }}>
-          <Typography variant="h5" fontWeight="bold" gutterBottom>
-            Bill Summary
-          </Typography>
-          <Divider />
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', margin: '1rem 0' }}>
-            <Typography variant="body1">Total Items:</Typography>
-            <Typography variant="body1">{cart.length}</Typography>
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-            <Typography variant="body1">Total Price:</Typography>
-            <Typography variant="body1">₹{totalPrice}</Typography>
-          </Box>
-          <Divider />
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ marginTop: '1rem' }}
-            onClick={() => alert('Proceed to Checkout')}
+        {/* Summary Section */}
+        <Grid item xs={12} md={4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: "1.5rem",
+              borderRadius: "8px",
+              backgroundColor: "#fff",
+            }}
           >
-            Checkout
-          </Button>
-        </Box>
-      )}
+            <Typography variant="h5" fontWeight="bold" gutterBottom>
+              Order Summary
+            </Typography>
+            <Divider sx={{ marginBottom: "1rem" }} />
+            <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
+              <Typography variant="body1">Items in Cart:</Typography>
+              <Typography variant="body1">{cartItems.length}</Typography>
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
+              <Typography variant="body1">Total Price:</Typography>
+              <Typography variant="body1" fontWeight="bold">
+                ₹{totalBill}
+              </Typography>
+            </Box>
+            <Divider sx={{ marginBottom: "1rem" }} />
+            <Button
+              variant="contained"
+              fullWidth
+              disabled={cartItems.length === 0}
+              style={{ backgroundColor: "#797c69" }}
+            >
+              Proceed to Payment
+            </Button>
+          </Paper>
+        </Grid>
+      </Grid>
     </Box>
+    </div>
   );
 };
 

@@ -19,14 +19,15 @@ import image3 from './image3.png';
 import image4 from './image4.png';
 import {Avatar,Paper} from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import './App.css';
 
 export default function Home() {
     const navigate = useNavigate();
-    const signin = () =>{
-        navigate('/home');
-    }
+    const goToHomepage = () => {
+      navigate('/home'); // Redirects to the homepage (root path)
+    };
     const goTonext = () =>{
       navigate('/newpage');
     }
@@ -40,6 +41,10 @@ export default function Home() {
 
       const openX = () =>{
         window.open('https://www.x.com', '_blank');
+      };
+
+      const goToCart = () => {
+        navigate('/cart'); // Replace with your cart page path
       };
 
       const navigateToNextPage = (id) => {
@@ -109,22 +114,36 @@ export default function Home() {
               content: 'I never knew I could be this stylish',
             },
           ];
+          
   return (
     <div className='home'>
     
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{backgroundColor:'white'}}>
         <Toolbar>
+        
         <IconButton
         size="large"
         edge="start"
         aria-label="home"
-        sx={{ mr: 2, color: '#5A5A5A' }}
-        onClick={signin}
+        color= '#c9c7b8'
+        sx={{ mr: 2 }}
+        onClick={goToHomepage}
       >
         <HomeIcon />
         </IconButton>
-          <Typography
+
+        <IconButton
+          size="large"
+          edge="start"
+          color="#c9c7b8" 
+          aria-label="cart"
+          sx={{ mr: 2 }}
+          onClick={goToCart}>
+        <ShoppingCartIcon />
+        </IconButton>
+
+           <Typography
               variant="h5"
               noWrap
               component="div"

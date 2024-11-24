@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useCart } from './CartContext';
+import React, { useState } from 'react'
 import { useParams ,useNavigate} from 'react-router-dom';
+import { ref, push } from "firebase/database";
+import { db } from "./firebase";
 import {
   Box,
   Typography,
@@ -47,7 +48,6 @@ import img19 from './images/img_19.png';
 const ProductDetailPage = () => {
   const { productSlug } = useParams(); // Extract the productSlug from the URL
   const navigate = useNavigate(); // Hook for navigation
-  const { addToCart } = useCart(); // Access cart context
 
   // const categoryData = {
   //   'oversized-tshirts': [
@@ -200,10 +200,21 @@ const ProductDetailPage = () => {
                   variant="contained"
                   style={{ backgroundColor: 'transparent', color: 'black', border: '0.60px solid black' }}
                   onClick={() => {
-                    addToCart(product);
-                    window.alert('Item added to cart'); // Show alert
-                    navigate('/cart'); // Redirect to the cart page
-                    }}>
+                    // Add quantity to the product object
+                    const productWithQuantity = { ...product, quantity: 1 };
+                
+                    // Save product with quantity to Firebase
+                    const cartRef = ref(db, 'cart');
+                    push(cartRef, productWithQuantity)
+                      .then(() => {
+                        window.alert('Item added to cart'); // Show alert
+                        navigate('/cart'); // Redirect to the cart page
+                      })
+                      .catch((error) => {
+                        console.error("Error adding to cart: ", error);
+                        window.alert('Failed to add item to cart.');
+                      });
+                  }}>
                   Add to Cart
                 </Button>
               </CardActions>

@@ -8,6 +8,7 @@ import { Facebook } from '@mui/icons-material';
 import logo from './logo.png';
 import { useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Box, Typography, Grid, Card, CardMedia, CardContent } from '@mui/material';
 import { Link } from 'react-router-dom'; // Import Link for navigation
 import './App.css';
@@ -70,10 +71,14 @@ function Newpage() {
     navigate('/home'); // Redirects to the homepage (root path)
   };
 
+  const goToCart = () => {
+    navigate('/cart'); // Replace with your cart page path
+  };
+
   const navigate = useNavigate();
 
   return (
-    <div className='newpage'>
+    <div className='home'>
 
 <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{backgroundColor:'white'}}>
@@ -82,10 +87,21 @@ function Newpage() {
         size="large"
         edge="start"
         aria-label="home"
-        sx={{ mr: 2, color: '#5A5A5A' }}
+        color= '#c9c7b8'
+        sx={{ mr: 2 }}
         onClick={goToHomepage}
       >
         <HomeIcon />
+        </IconButton>
+
+        <IconButton
+          size="large"
+          edge="start"
+          color="#c9c7b8" 
+          aria-label="cart"
+          sx={{ mr: 2 }}
+          onClick={goToCart}>
+        <ShoppingCartIcon />
         </IconButton>
           <Typography
               variant="h5"
