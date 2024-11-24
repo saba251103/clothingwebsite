@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ref, onValue, update, remove } from "firebase/database";
+import { ref, onValue, update, remove, get } from "firebase/database";
 import { db } from "./firebase";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -83,14 +83,36 @@ const CartPage = () => {
 
   // Remove item from cart
   const handleRemoveItem = (id) => {
-    const itemRef = ref(db, `cart/${id}`);
-    remove(itemRef)
-      .then(() => {
-        window.alert("Item removed from cart.");
+    const cartRef = ref(db, 'cart'); // Reference to the 'cart' collection
+  
+    // Get all items in the cart
+    get(cartRef)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          // Iterate through the items in the cart to find the matching id
+          snapshot.forEach((childSnapshot) => {
+            const item = childSnapshot.val();
+            const itemId = childSnapshot.key; // This is the unique key of the item
+  
+            if (item.id === id) {
+              // If the item id matches, remove the item using its unique key
+              remove(ref(db, `cart/${itemId}`))
+                .then(() => {
+                  window.alert("Item removed from cart");
+                })
+                .catch((error) => {
+                  console.error("Error removing item: ", error);
+                  window.alert("Failed to remove item");
+                });
+            }
+          });
+        } else {
+          console.log("No items found in cart");
+        }
       })
       .catch((error) => {
-        console.error("Error removing item: ", error);
-        window.alert("Failed to remove item.");
+        console.error("Error fetching cart items: ", error);
+        window.alert("Failed to retrieve cart data");
       });
   };
 
@@ -311,6 +333,7 @@ const CartPage = () => {
               fullWidth
               disabled={cartItems.length === 0}
               style={{ backgroundColor: "#797c69" }}
+              onClick={navigate('/payment')}
             >
               Proceed to Payment
             </Button>

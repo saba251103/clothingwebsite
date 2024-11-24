@@ -34,10 +34,11 @@ const PaymentPage = () => {
   };
 
   const handleProceedToPay = () => {
-    setShowPaymentGateway(true); 
-    setTimeout(() => {
-      paymentGatewayRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 0); // Ensure the gateway is visible before scrolling
+    // setShowPaymentGateway(true); 
+    // setTimeout(() => {
+    //   paymentGatewayRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // }, 0); // Ensure the gateway is visible before scrolling
+    navigate('/payment-gateway')
   };
   
 

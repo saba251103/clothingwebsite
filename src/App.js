@@ -5,6 +5,7 @@ import Login from './Login';
 import Nextpage from './nextpage';
 import Newpage from './newpage';
 import PaymentPage from './PaymentPage';
+import Payment from './Payment';
 import ProductDetailPage from './ProductDetailPage';
 import Colortest from './colortest'; // Import the Colortest component
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -61,6 +62,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <PaymentPage />
+              </ProtectedRoute>
+            }
+          />
+          
+          <Route 
+            path="/payment-gateway" 
+            element={
+              <ProtectedRoute>
+                <Payment />
               </ProtectedRoute>
             }
           />
