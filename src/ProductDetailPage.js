@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useCart } from './CartContext';
 import { useParams ,useNavigate} from 'react-router-dom';
 import {
   Box,
@@ -46,6 +47,7 @@ import img19 from './images/img_19.png';
 const ProductDetailPage = () => {
   const { productSlug } = useParams(); // Extract the productSlug from the URL
   const navigate = useNavigate(); // Hook for navigation
+  const { addToCart } = useCart(); // Access cart context
 
   // const categoryData = {
   //   'oversized-tshirts': [
@@ -150,7 +152,7 @@ const ProductDetailPage = () => {
 
   // Handle "Buy Now" click
   const handleBuyNow = (product) => {
-    navigate(`/payment/${product.id}`, { state: { product } });
+    navigate('/payment/${product.id}', { state: { product } });
   };
 
   return (
@@ -194,8 +196,15 @@ const ProductDetailPage = () => {
                 <Button variant="contained"  style={{ backgroundColor:'#797c69'}} onClick={() => handleBuyNow(product)}>
                   Buy Now
                 </Button>
-                <Button variant="contained" style={{ backgroundColor:'transparent',color:'black', border: '0.60px solid black',marginLeft:'47px'}} >
-                  Add to cart
+                <Button
+                  variant="contained"
+                  style={{ backgroundColor: 'transparent', color: 'black', border: '0.60px solid black' }}
+                  onClick={() => {
+                    addToCart(product);
+                    window.alert('Item added to cart'); // Show alert
+                    navigate('/cart'); // Redirect to the cart page
+                    }}>
+                  Add to Cart
                 </Button>
               </CardActions>
             </Card>

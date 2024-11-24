@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Box, Button, Typography, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Card, CardMedia, CardContent} from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -12,13 +12,11 @@ const PaymentPage = () => {
   const [size, setSize] = useState('');
   const [cardDetails, setCardDetails] = useState({ number: '', expiry: '', cvv: '' });
 
+  const paymentGatewayRef = useRef(null);
+
   // Handle size change
   const handleSizeChange = (event) => {
     setSize(event.target.value);
-  };
-
-  const handleProceedToPay = () => {
-    setShowPaymentGateway(true); // Show payment gateway when the button is clicked
   };
 
   const isPaymentDetailsComplete = () => {
@@ -34,6 +32,14 @@ const PaymentPage = () => {
     }
     return false;
   };
+
+  const handleProceedToPay = () => {
+    setShowPaymentGateway(true); 
+    setTimeout(() => {
+      paymentGatewayRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 0); // Ensure the gateway is visible before scrolling
+  };
+  
 
   return (
     
@@ -109,7 +115,13 @@ const PaymentPage = () => {
       )}
 
         {showPaymentGateway && (
-          <Box sx={{ marginTop: '5rem', textAlign: 'left' }}>
+          <Box 
+          ref={paymentGatewayRef}
+          sx={{ 
+            marginTop: '5rem', 
+            textAlign: 'left', 
+            backgroundColor: 'white',
+            padding: '2rem' }}>
             <Typography 
             variant="h4" 
             gutterBottom
@@ -183,7 +195,7 @@ const PaymentPage = () => {
         />
       )}
 
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '2rem' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1rem' }}>
       <Button
         variant="contained"
         color="success"

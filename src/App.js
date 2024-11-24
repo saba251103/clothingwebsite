@@ -10,10 +10,30 @@ import Colortest from './colortest'; // Import the Colortest component
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute'; // Import the ProtectedRoute component
 import CartPage from './CartPage';
+import { CartProvider } from './CartContext';
+import ReactDOM from 'react-dom';
+import React from 'react';
+
+ReactDOM.render(
+  <React.StrictMode>
+   <CartProvider>
+     <App />
+   </CartProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 
 function App() {
   return (
     <div className="App">
+      <CartProvider>
+        <Router>
+          <Routes>
+            <Route path="/products/:productSlug" element={<ProductDetailPage />} />
+            <Route path="/cart" element={<CartPage />} />
+          </Routes>
+        </Router>
+      </CartProvider>
       <Router>
         <Routes>
           {/* Public Routes */}
@@ -74,12 +94,6 @@ function App() {
             }
           />
           
-        <Route 
-        path="/cart" 
-        element={
-          <ProtectedRoute>
-        <CartPage />
-        </ProtectedRoute>} />
 
         </Routes>
       </Router>
