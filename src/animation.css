@@ -1,0 +1,101 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fafafa;
+    color: #333;
+  }
+  
+  /* Navbar Styling */
+  .MuiAppBar-root {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .MuiToolbar-root img {
+    max-width: 200px;
+    cursor: pointer;
+  }
+  
+  /* Section Title Styling */
+  .homepage h3 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+  }
+  
+  .homepage h3::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background-color: #c9c7b8;
+    margin: 10px auto 0;
+  }
+  
+  /* Product Card Animations */
+  .MuiCard-root {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .MuiCard-root:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .MuiCardMedia-root {
+    transition: transform 0.3s ease;
+  }
+  
+  .MuiCard-root:hover .MuiCardMedia-root {
+    transform: scale(1.1);
+  }
+  
+  /* Button Hover Effects */
+  button.MuiButtonBase-root {
+    background-color: #c9c7b8;
+    border: 2px solid transparent;
+    color: #fff;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+  }
+  
+  button.MuiButtonBase-root:hover {
+    background-color: #797c69;
+    color: #fff;
+    border: 2px solid #c9c7b8;
+  }
+  
+  /* Fade-In Animation */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1s ease forwards;
+  }
+  
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .MuiGrid-item {
+      margin: 0 auto;
+    }
+  
+    .MuiTypography-h3 {
+      font-size: 1.5rem;
+    }
+  
+    .MuiCard-root {
+      max-width: 95%;
+    }
+  }
+  
