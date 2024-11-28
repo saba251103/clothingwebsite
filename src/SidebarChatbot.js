@@ -24,7 +24,7 @@ function SidebarChatbot() {
       try {
         setLoading(true);
         const response = await axios.post(
-          "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyAyXlJz_rNoQeXTz9xygbc_jHLB8f6qutw",
+          "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=API_KEY",
           {
             "contents": [
               {
